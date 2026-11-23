@@ -1,0 +1,550 @@
+/* ==========================================================================
+   ESTILOS BASE, PSICOLOGÍA TECNOLÓGICA Y ACCESIBILIDAD (WCAG 2.2 AA)
+   ========================================================================== */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: #ffffff;
+    color: #06152d; /* Azul noche profundo (17.8:1 de contraste) */
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Enfoque accesible universal de alto contraste (WCAG 2.4.7) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible {
+    outline: 3px solid #0052cc;
+    outline-offset: 4px;
+}
+
+/* Barra superior con sutil tinte azul tecnológico */
+.nav-surface {
+    background-color: rgba(248, 251, 255, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Sombra azulada sutil para el hardware */
+.chassis-shadow {
+    filter: drop-shadow(0 18px 28px rgba(0, 82, 204, 0.16));
+}
+
+/* Garantía adicional: ningún texto secundario en fondo claro será gris lavado */
+.text-slate-500,
+.text-slate-600 {
+    color: #0f294a !important; /* Contraste 14.3:1 */
+}
+
+/* Respeto estricto a prefers-reduced-motion (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+.motion-paused * {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* ==========================================================================
+   REGLAS RESPONSIVE PARA TABLETS Y MÓVILES (< 1024px y < 640px)
+   ========================================================================== */
+
+/* 1. Ajustes para pantallas medianas y móviles (< 768px) */
+@media (max-width: 768px) {
+    /* Reducción proporcional del H1 para que no rompa el diseño en móvil */
+    .text-h1 {
+        font-size: 1.75rem !important; /* 28px en móvil en lugar de 36px */
+        line-height: 1.3 !important;
+    }
+
+    .text-h2 {
+        font-size: 1.125rem !important; /* 18px en móvil */
+    }
+
+    /* Hacer que las tablas comparativas se deslicen suavemente sin romper el ancho */
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Ajuste del reproductor de videotutoriales para pantallas bajas */
+    #panel-videos .h-\[320px\] {
+        height: auto !important;
+        min-height: 280px;
+        padding-top: 3.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+}
+
+/* 2. Ajustes específicos para celulares (< 640px) */
+@media (max-width: 640px) {
+    /* Header más compacto para que quepan el logo y los botones sin apretarse */
+    header .h-20 {
+        height: 4.5rem !important; /* 72px */
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+
+    header svg.w-12 {
+        width: 2.25rem !important;
+        height: 2.25rem !important;
+    }
+
+    /* Simulador 3D: Evita que la barra inferior flote encima del modelo y lo tape */
+    #simulador .h-\[520px\] {
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    #sim-canvas {
+        height: 320px !important;
+        width: 100% !important;
+    }
+
+    /* El mensaje HUD superior pasa a ser un bloque normal arriba del canvas */
+    #voice-hud {
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+        padding: 0.75rem 1rem !important;
+    }
+
+    /* La barra inferior de vistas y colores deja de ser absolute y baja debajo del canvas */
+    #simulador .absolute.bottom-4 {
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+        padding: 1rem !important;
+    }
+
+    /* Botones de vistas 3D en cuadrícula de 2x2 para que sean fáciles de tocar */
+    #simulador [role="tablist"] {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        width: 100% !important;
+    }
+
+    /* Ajuste del Prototipo SVG 2D en pantallas angostas */
+    #inicio svg[viewBox="0 0 320 540"] {
+        max-height: 380px !important;
+    }
+
+    /* Chat flotante UPI-IA adaptado al ancho del celular */
+    #upi-assistant-panel {
+        width: calc(100vw - 1.5rem) !important;
+        right: 0 !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    #chat-messages-box {
+        height: 15rem !important; /* 240px para dejar espacio al teclado virtual */
+    }
+
+    /* Botón flotante más compacto en móvil */
+    #btn-floating-chat {
+        padding: 0.5rem 0.85rem !important;
+        min-height: 48px !important;
+    }
+}
+
+/* ==========================================================================
+   EXPANSIÓN PARA MONITORES GRANDES Y PANTALLA COMPLETA (> 1280px)
+   ========================================================================== */
+@media (min-width: 1280px) {
+    /* Amplía el contenedor principal del 1280px original al 92% del ancho de pantalla */
+    .max-w-7xl {
+        max-width: 92vw !important;
+        padding-left: 2.5rem !important;
+        padding-right: 2.5rem !important;
+    }
+
+    /* Permite que la tarjeta del Prototipo 2D aproveche mejor el espacio derecho */
+    #inicio .max-w-md {
+        max-width: 34rem !important; /* ~544px en lugar de 448px */
+    }
+
+    /* Da un poco más de altura al visor 3D en pantallas grandes */
+    #simulador .h-\[520px\] {
+        height: 620px !important;
+    }
+}/* ==========================================================================
+   CORRECCIÓN DE CONTRASTE EN HOVER DE PESTAÑAS DE SOPORTE (WCAG)
+   ========================================================================== */
+.support-tab-btn[aria-selected="true"]:hover,
+.kb-cat-btn.bg-brand-blue:hover {
+    background-color: #003d99 !important; /* Azul hover oscuro */
+    color: #ffffff !important;            /* Texto blanco siempre legible */
+}
+
+.support-tab-btn[aria-selected="false"]:hover {
+    background-color: #ffffff !important; /* Fondo blanco en inactivos */
+    color: #06152d !important;            /* Texto azul marino oscuro */
+}
+
+/* ==========================================================================
+   ESTILOS DEL SIMULADOR INTERACTIVO AVANZADO (ENCAPSULADOS)
+   ========================================================================== */
+.upi-simulador-avanzado {
+    --bg-estudio: #181a1f;
+    --carcasa-base: #23262d;
+    --boton-gris: #464950;
+    --boton-gris-top: #52565e;
+    --boton-gris-sombra: #2b2d32;
+    --boton-rojo: #b8322a;
+    --boton-rojo-top: #cc3a31;
+    --boton-rojo-sombra: #781d18;
+    --relieve-blanco: #eceef2;
+    --panel-monitor: #20232a;
+    --borde-panel: #323642;
+    --texto-principal: #f0f2f5;
+    --texto-secundario: #b8c0d0;
+
+    background-color: var(--bg-estudio);
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: var(--texto-principal);
+    user-select: none;
+}
+
+.upi-simulador-avanzado .escenario {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 32px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.upi-simulador-avanzado .zona-prototipo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upi-simulador-avanzado .carcasa {
+    position: relative;
+    width: 310px;
+    height: 610px;
+    background: linear-gradient(145deg, #2a2d35, var(--carcasa-base));
+    border-radius: 42px;
+    border: 4px solid #353944;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.65),
+        inset 0 2px 4px rgba(255, 255, 255, 0.08),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.5);
+    padding: 26px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.08s ease;
+}
+
+@keyframes vibracionHaptica {
+    0% { transform: translate(0, 0); }
+    15% { transform: translate(-4px, 1px); }
+    30% { transform: translate(4px, -1px); }
+    45% { transform: translate(-3px, -2px); }
+    60% { transform: translate(3px, 2px); }
+    75% { transform: translate(-2px, 1px); }
+    90% { transform: translate(2px, -1px); }
+    100% { transform: translate(0, 0); }
+}
+
+.upi-simulador-avanzado .carcasa.vibrando {
+    animation: vibracionHaptica 0.4s ease-in-out;
+}
+
+.upi-simulador-avanzado .cabezal-superior {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 26px;
+}
+
+.upi-simulador-avanzado .rejilla-altavoz {
+    width: 64px;
+    height: 7px;
+    background: #14161a;
+    border-radius: 99px;
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.upi-simulador-avanzado .led-estado {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background-color: #3a3e47;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+    transition: all 0.25s ease;
+}
+
+.upi-simulador-avanzado .led-estado.encendido { background-color: #2ecc71; box-shadow: 0 0 10px #2ecc71; }
+.upi-simulador-avanzado .led-estado.escuchando { background-color: #3498db; box-shadow: 0 0 14px #3498db; }
+.upi-simulador-avanzado .led-estado.procesando { background-color: #f1c40f; box-shadow: 0 0 14px #f1c40f; }
+.upi-simulador-avanzado .led-estado.alerta { background-color: #e74c3c; box-shadow: 0 0 14px #e74c3c; }
+
+.upi-simulador-avanzado .botones-laterales {
+    position: absolute;
+    right: -13px;
+    top: 105px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.upi-simulador-avanzado .btn-lateral {
+    width: 14px;
+    height: 44px;
+    background: linear-gradient(90deg, var(--boton-gris), var(--boton-gris-top));
+    border: 1px solid #2b2e34;
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    color: var(--relieve-blanco);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.08s ease, background 0.15s;
+}
+
+.upi-simulador-avanzado .btn-lateral:hover { background: #5c6069; }
+.upi-simulador-avanzado .btn-lateral:active { transform: translateX(-3px); }
+
+.upi-simulador-avanzado .panel-botones {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.upi-simulador-avanzado .fila {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upi-simulador-avanzado .fila-superior,
+.upi-simulador-avanzado .fila-media {
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+.upi-simulador-avanzado .btn-circular {
+    position: relative;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--boton-gris-top), var(--boton-gris));
+    border: 2px solid #35383e;
+    color: var(--relieve-blanco);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    box-shadow: 
+        0 7px 0 var(--boton-gris-sombra),
+        0 11px 16px rgba(0, 0, 0, 0.55),
+        inset 0 2px 3px rgba(255, 255, 255, 0.16);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+}
+
+.upi-simulador-avanzado .btn-mediano { width: 82px; height: 82px; }
+.upi-simulador-avanzado .btn-grande { width: 108px; height: 108px; gap: 7px; }
+.upi-simulador-avanzado .btn-circular:hover { filter: brightness(1.08); }
+.upi-simulador-avanzado .btn-circular:active {
+    transform: translateY(5px);
+    box-shadow: 0 2px 0 var(--boton-gris-sombra), 0 4px 8px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.upi-simulador-avanzado .btn-grande.activo-mic {
+    border-color: #3498db;
+    box-shadow: 0 7px 0 #1f5f8b, 0 0 22px rgba(52, 152, 219, 0.55), inset 0 2px 3px rgba(255, 255, 255, 0.25);
+}
+
+.upi-simulador-avanzado .pestana-izq,
+.upi-simulador-avanzado .pestana-der {
+    position: absolute;
+    width: 7px;
+    height: 12px;
+    background-color: #383b42;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.upi-simulador-avanzado .pestana-izq { left: -7px; border-radius: 3px 0 0 3px; }
+.upi-simulador-avanzado .pestana-der { right: -7px; border-radius: 0 3px 3px 0; }
+
+.upi-simulador-avanzado .icono { width: 28px; height: 28px; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6)); }
+.upi-simulador-avanzado .icono-grande { width: 38px; height: 38px; }
+
+.upi-simulador-avanzado .braille { display: flex; gap: 4px; align-items: center; justify-content: center; }
+.upi-simulador-avanzado .braille-grid { display: grid; grid-template-columns: repeat(2, 4px); gap: 3px 5px; }
+.upi-simulador-avanzado .punto {
+    width: 4px; height: 4px; border-radius: 50%;
+    background-color: var(--relieve-blanco);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+}
+
+.upi-simulador-avanzado .fila-sos { margin-top: 6px; }
+.upi-simulador-avanzado .btn-sos {
+    position: relative;
+    overflow: hidden;
+    width: 176px;
+    height: 68px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, var(--boton-rojo-top), var(--boton-rojo));
+    border: 2px solid #8f221c;
+    color: var(--relieve-blanco);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    box-shadow: 0 7px 0 var(--boton-rojo-sombra), 0 12px 18px rgba(0, 0, 0, 0.55), inset 0 2px 3px rgba(255, 255, 255, 0.22);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+}
+
+.upi-simulador-avanzado .btn-sos::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+    background: rgba(255, 255, 255, 0.28);
+    pointer-events: none;
+    transition: width 0.1s linear;
+}
+
+.upi-simulador-avanzado .btn-sos.manteniendo::before { width: 100%; transition: width 5s linear; }
+.upi-simulador-avanzado .btn-sos.manteniendo,
+.upi-simulador-avanzado .btn-sos:active {
+    transform: translateY(5px);
+    box-shadow: 0 2px 0 var(--boton-rojo-sombra), 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.upi-simulador-avanzado .pestana-roja { background-color: #8f221c; height: 14px; }
+.upi-simulador-avanzado .texto-sos { position: relative; z-index: 1; font-size: 22px; font-weight: 800; letter-spacing: 2px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+.upi-simulador-avanzado .braille-sos { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 4px); gap: 3px 6px; }
+.upi-simulador-avanzado .btn-sos:hover { filter: brightness(1.08); }
+
+.upi-simulador-avanzado .panel-monitor {
+    background-color: var(--panel-monitor);
+    border: 1px solid var(--borde-panel);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.upi-simulador-avanzado .monitor-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 1px solid var(--borde-panel); padding-bottom: 14px;
+}
+
+.upi-simulador-avanzado .monitor-header h3 { font-size: 20px; font-weight: 700; color: var(--texto-principal); }
+.upi-simulador-avanzado .subtitulo { font-size: 13px; color: var(--texto-secundario); margin-top: 3px; }
+
+.upi-simulador-avanzado .badge-estado {
+    background: #2b303b; color: var(--texto-secundario); font-size: 12px; font-weight: 600;
+    padding: 6px 12px; border-radius: 99px; border: 1px solid #3c4252; transition: all 0.25s ease;
+}
+
+.upi-simulador-avanzado .badge-estado.online { background: rgba(46, 204, 113, 0.14); color: #2ecc71; border-color: rgba(46, 204, 113, 0.4); }
+.upi-simulador-avanzado .badge-estado.offline { background: rgba(231, 76, 60, 0.14); color: #e74c3c; border-color: rgba(231, 76, 60, 0.4); }
+
+.upi-simulador-avanzado .controles-demo {
+    background: #191b21; border: 1px solid var(--borde-panel); border-radius: 12px;
+    padding: 16px; display: flex; flex-direction: column; gap: 14px;
+}
+
+.upi-simulador-avanzado .grupo-control { display: flex; flex-direction: column; gap: 7px; }
+.upi-simulador-avanzado .grupo-control label { font-size: 13px; color: var(--texto-secundario); }
+.upi-simulador-avanzado .grupo-control select {
+    background: #252832; border: 1px solid #3a3f4f; border-radius: 8px;
+    padding: 10px 12px; color: var(--texto-principal); font-size: 14px; outline: none; cursor: pointer;
+}
+
+.upi-simulador-avanzado .btn-accion {
+    background: #2765d9; color: white; border: none; border-radius: 8px; padding: 10px;
+    font-size: 13.5px; font-weight: 600; cursor: pointer; margin-top: 6px;
+    transition: all 0.2s; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.upi-simulador-avanzado .btn-accion:hover:not(:disabled) { background: #3576f2; transform: translateY(-1px); }
+.upi-simulador-avanzado .btn-accion:disabled { background: #252832; color: #7a8299; cursor: not-allowed; box-shadow: none; }
+
+.upi-simulador-avanzado .opciones-rapidas {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+    font-size: 13px; color: var(--texto-secundario); padding-top: 4px; border-top: 1px solid #262933;
+}
+
+.upi-simulador-avanzado .switch-label { display: flex; align-items: center; gap: 8px; cursor: pointer; color: #d0d5e0; }
+
+.upi-simulador-avanzado .guia-botones { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.upi-simulador-avanzado .guia-item {
+    background: #181a20; border: 1px solid #2c303b; border-radius: 8px;
+    padding: 8px 12px; font-size: 12.5px; color: var(--texto-secundario);
+}
+.upi-simulador-avanzado .guia-item strong { color: var(--texto-principal); }
+
+.upi-simulador-avanzado .consola-voz { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.upi-simulador-avanzado .consola-header-log { display: flex; justify-content: space-between; align-items: center; }
+.upi-simulador-avanzado .consola-titulo { font-size: 13px; font-weight: 600; color: var(--texto-secundario); }
+.upi-simulador-avanzado .btn-limpiar {
+    background: transparent; border: 1px solid #3a3f4f; color: var(--texto-secundario);
+    font-size: 11px; padding: 3px 9px; border-radius: 6px; cursor: pointer;
+}
+.upi-simulador-avanzado .btn-limpiar:hover { color: var(--texto-principal); border-color: #5a627a; }
+
+.upi-simulador-avanzado .log-salida {
+    flex: 1; min-height: 170px; max-height: 240px; overflow-y: auto;
+    background: #14161b; border: 1px solid var(--borde-panel); border-radius: 12px;
+    padding: 14px; font-size: 14px; line-height: 1.55; display: flex; flex-direction: column; gap: 8px;
+}
+
+.upi-simulador-avanzado .log-linea { padding-bottom: 6px; border-bottom: 1px solid #1f222a; }
+.upi-simulador-avanzado .log-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; margin-right: 6px; }
+.upi-simulador-avanzado .tag-voz { background: rgba(52, 152, 219, 0.2); color: #5dade2; }
+.upi-simulador-avanzado .tag-haptico { background: rgba(46, 204, 113, 0.2); color: #58d68d; }
+.upi-simulador-avanzado .tag-alerta { background: rgba(231, 76, 60, 0.2); color: #ec7063; }
+.upi-simulador-avanzado .mensaje-sistema { color: var(--texto-secundario); font-style: italic; }
+
+@media (max-width: 960px) {
+    .upi-simulador-avanzado .escenario {
+        grid-template-columns: 1fr;
+    }
+    .upi-simulador-avanzado .guia-botones {
+        grid-template-columns: 1fr;
+    }
+}
